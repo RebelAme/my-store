@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 
 const App = () => {
-  const [mainImage, setMainImage] = useState("product-image-1.jpg");
-  const [cartCount, setCartCount] = useState(0);
+  const [mainImage, setMainImage] = useState("/product-image-1.jpg");
 
   useEffect(() => {
     // Load PayPal script dynamically
     const script = document.createElement("script");
-    script.src = "https://www.paypal.com/sdk/js?client-id=sb"; // Change client-id for production
+    script.src = "https://www.paypal.com/sdk/js?client-id=sb";
     script.onload = () => {
       window.paypal.Buttons({
         createOrder: (data, actions) => {
@@ -30,10 +29,6 @@ const App = () => {
     };
   }, []);
 
-  const handleAddToCart = () => {
-    setCartCount(cartCount + 1);
-  };
-
   return (
     <div className="flex justify-center items-center py-16">
       <div className="max-w-6xl w-full flex gap-8">
@@ -44,6 +39,27 @@ const App = () => {
             alt="Product"
             className="w-full h-auto object-contain"
           />
+          {/* Image Thumbnails */}
+          <div className="flex gap-4 mt-6">
+            <img
+              src="/product-thumbnail-1.jpg"
+              alt="Product Thumbnail 1"
+              className="w-20 h-20 object-cover cursor-pointer"
+              onClick={() => setMainImage("/product-image-1.jpg")}
+            />
+            <img
+              src="/product-thumbnail-2.jpg"
+              alt="Product Thumbnail 2"
+              className="w-20 h-20 object-cover cursor-pointer"
+              onClick={() => setMainImage("/product-image-2.jpg")}
+            />
+            <img
+              src="/product-thumbnail-3.jpg"
+              alt="Product Thumbnail 3"
+              className="w-20 h-20 object-cover cursor-pointer"
+              onClick={() => setMainImage("/product-image-3.jpg")}
+            />
+          </div>
         </div>
 
         {/* Right Column (Product Details) */}
@@ -60,7 +76,10 @@ const App = () => {
           <label htmlFor="size" className="block text-lg text-gray-800 mb-2">
             Size
           </label>
-          <select id="size" className="w-full p-3 border border-gray-300 rounded-lg mb-6">
+          <select
+            id="size"
+            className="w-full p-3 border border-gray-300 rounded-lg mb-6"
+          >
             <option value="small">Small</option>
             <option value="medium">Medium</option>
             <option value="large">Large</option>
@@ -68,7 +87,6 @@ const App = () => {
           </select>
 
           <button
-            onClick={handleAddToCart}
             className="mt-6 bg-black text-white py-3 px-8 rounded-lg hover:bg-gray-800 transition duration-300"
           >
             Add to Cart
@@ -77,28 +95,6 @@ const App = () => {
           {/* PayPal Button */}
           <div id="paypal-button" className="mt-6"></div>
         </div>
-      </div>
-
-      {/* Product Image Thumbnails */}
-      <div className="flex gap-4 mt-6">
-        <img
-          src="/product-thumbnail-1.jpg"
-          alt="Product Thumbnail 1"
-          className="w-20 h-20 object-cover cursor-pointer"
-          onClick={() => setMainImage("product-image-1.jpg")}
-        />
-        <img
-          src="/product-thumbnail-2.jpg"
-          alt="Product Thumbnail 2"
-          className="w-20 h-20 object-cover cursor-pointer"
-          onClick={() => setMainImage("product-image-2.jpg")}
-        />
-        <img
-          src="/product-thumbnail-3.jpg"
-          alt="Product Thumbnail 3"
-          className="w-20 h-20 object-cover cursor-pointer"
-          onClick={() => setMainImage("product-image-3.jpg")}
-        />
       </div>
     </div>
   );
